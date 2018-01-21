@@ -1,2 +1,5 @@
 # ASTR400B_JIACHUAN
-Repository for astr400b
+Repository for ASTR 400B
+[Under construction!]
+File distriution:
+code: the python source code
