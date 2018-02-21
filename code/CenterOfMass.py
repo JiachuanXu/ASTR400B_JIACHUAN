@@ -60,7 +60,7 @@ class CenterOfMass:
 
     # a more sophisticated function to calculate COM position 
     # input: tolerance
-    def COM_P(self, delta):
+    def COM_P(self, delta, VolDec):
         # first estimate of COM position
         [XCOM, YCOM, ZCOM] = self.COMdefine(self.m, self.position)
         # Calculate the magnitude of COM position
@@ -72,8 +72,8 @@ class CenterOfMass:
         RNEW = np.sqrt(np.sum(COMframe_position*COMframe_position, 1))
         # select the maximum if particle position in COM frame
         RMAX = RNEW.max()
-        # devided by 2, shrink the range to do refine calculation
-        RMAX /= 2.
+        # devided by VolDec, shrink the range to do refine calculation
+        RMAX /= VolDec
         index_refine = np.where(RNEW<RMAX)
         # calculate refined COM position and its magnitude
         [XCOM_NEW, YCOM_NEW, ZCOM_NEW] = \
@@ -92,7 +92,7 @@ class CenterOfMass:
                 self.position[index_refine]-np.array([XCOM, YCOM, ZCOM])
             RNEW = np.sqrt(np.sum(COMframe_position*COMframe_position, 1))
             RMAX = RNEW.max()
-            RMAX /= 2.
+            RMAX /= VolDec
             index_refine = np.where(RNEW<RMAX)
             [XCOM_NEW, YCOM_NEW, ZCOM_NEW] = self.COMdefine\
                 (self.m[index_refine], self.position[index_refine])

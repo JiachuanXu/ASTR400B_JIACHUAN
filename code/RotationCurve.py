@@ -73,7 +73,7 @@ class MassProfile:
 		radii = np.sort(radii)
 		# get COM position and calculate R with regard to COM 
 		center = CenterOfMass(self.filename, ptype)
-		COMP = center.COM_P(TOLERANCE())
+		COMP = center.COM_P(TOLERANCE(), 2.)
 		R = np.sqrt(np.sum((self.position[ptype_index]-COMP)*(self.position[ptype_index]-COMP), 1))
 		# loop through radii to deliver mass into bins
 		self.massary = np.zeros(len(radii))

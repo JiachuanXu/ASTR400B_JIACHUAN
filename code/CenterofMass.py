@@ -60,7 +60,7 @@ class CenterOfMass:
 
     # a more sophisticated function to calculate COM position 
     # input: tolerance
-    def COM_P(self, delta):
+    def COM_P(self, delta, VolDec):
         # first estimate of COM position
         [XCOM, YCOM, ZCOM] = self.COMdefine(self.m, self.position)
         # Calculate the magnitude of COM position
@@ -72,8 +72,8 @@ class CenterOfMass:
         RNEW = np.sqrt(np.sum(COMframe_position*COMframe_position, 1))
         # select the maximum if particle position in COM frame
         RMAX = RNEW.max()
-        # devided by 2, shrink the range to do refine calculation
-        RMAX /= 2.
+        # devided by VolDec(volumn decrease), shrink the range to do refine calculation
+        RMAX /= VolDec
         index_refine = np.where(RNEW<RMAX)
         # calculate refined COM position and its magnitude
         [XCOM_NEW, YCOM_NEW, ZCOM_NEW] = \
@@ -92,7 +92,7 @@ class CenterOfMass:
                 self.position[index_refine]-np.array([XCOM, YCOM, ZCOM])
             RNEW = np.sqrt(np.sum(COMframe_position*COMframe_position, 1))
             RMAX = RNEW.max()
-            RMAX /= 2.
+            RMAX /= VolDec
             index_refine = np.where(RNEW<RMAX)
             [XCOM_NEW, YCOM_NEW, ZCOM_NEW] = self.COMdefine\
                 (self.m[index_refine], self.position[index_refine])
@@ -129,9 +129,9 @@ MWCOM = CenterOfMass("../MW_%03d.txt"%int(sys.argv[1]), int(sys.argv[2]))
 M31COM = CenterOfMass("../M31_%03d.txt"%int(sys.argv[1]), int(sys.argv[2]))
 M33COM = CenterOfMass("../M33_%03d.txt"%int(sys.argv[1]), int(sys.argv[2]))
 # Calculate Center of Mass position for the MW, M31, M33 
-rc_MW = MWCOM.COM_P(float(sys.argv[3]))
-rc_M31 = M31COM.COM_P(float(sys.argv[3]))
-rc_M33 = M33COM.COM_P(float(sys.argv[3]))
+rc_MW = MWCOM.COM_P(float(sys.argv[3]), 2.)
+rc_M31 = M31COM.COM_P(float(sys.argv[3]), 2.)
+rc_M33 = M33COM.COM_P(float(sys.argv[3]), 2.)
 # Calculate Center of Mass velocity for the MW, M31, M33 
 vc_MW = MWCOM.COM_V(float(sys.argv[4]), rc_MW)
 vc_M31 = M31COM.COM_V(float(sys.argv[4]), rc_M31)

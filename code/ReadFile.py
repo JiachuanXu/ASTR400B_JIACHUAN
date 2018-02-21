@@ -18,7 +18,7 @@ def Read(filename):
 	file = open(filename,'r')
 	line1 = file.readline()
 	label, value = line1.split()
-	time = float(value)*10.0*u.Myr # time in units of 10Myr
+	time = float(value)*u.Myr # time in units of Myr
 	line2 = file.readline()
 	label, value = line2.split()
 	tot_num = int(value) # total particles number for this snapshot
