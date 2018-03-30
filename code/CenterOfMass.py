@@ -59,7 +59,7 @@ class CenterOfMass:
         return r_c
 
     # a more sophisticated function to calculate COM position 
-    # input: tolerance
+    # input: tolerance, volumn decreasing factor
     def COM_P(self, delta, VolDec):
         # first estimate of COM position
         [XCOM, YCOM, ZCOM] = self.COMdefine(self.m, self.position)

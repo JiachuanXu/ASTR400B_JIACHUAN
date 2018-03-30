@@ -66,7 +66,7 @@ for i in index[0:len(index)-1]:
 		localM_t = np.append(localM_t, data_M31['t'][i])
 		localM_R = np.append(localM_R, R_M332M31[i])
 		print("local max founded")
-v_decay = -(localM_R[-1]-localM_R[0])/(localM_t[-1]-localM_t[0])
+v_decay = (localM_R[-2]-localM_R[-1])/(localM_t[-2]-localM_t[-1])
 print("mean decay velocity of M33: %f kpc/Gyr"%v_decay)
 
 # For HW 6 specific
